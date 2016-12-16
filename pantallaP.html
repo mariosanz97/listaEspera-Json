@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mi primer script en PHP</title>
+	<meta charset="utf-8">  
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body   style="background-color : #BCF9FB; " onload="tablaPreguntas()">
+<div align="center">
+	<div align='center' style="max-width: 900px"  >
+
+
+		
+		<!-- <button onclick='insertar(this)'> Insertar</button><br> -->
+		
+		<br> <br>  
+		<strong> Dudas pendientes </strong> <br> <br>
+		<div id="id01"></div>
+		<div id="reult"></div>
+
+		<script>	
+
+</script>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>idPeticion</th>
+					<th>direccion IP</th>
+					<th>usuario</th>
+					<th>texto</th>
+					<th>abierta</th>
+					<th>fechaInicio</th>
+					<th>fechaFin</th>
+
+				</tr>
+			</thead>
+
+			<tbody id="tabla">
+
+
+
+				<script type="text/javascript">
+					setInterval('tablaPreguntas()', 5000);
+
+
+					function tablaPreguntas(){
+						var xmlhttp = new XMLHttpRequest();
+						var url = "vertablajson.php";
+						xmlhttp.onreadystatechange = function() {
+							if (this.readyState == 4 && this.status == 200) {
+								var myArr = JSON.parse(this.responseText);
+								var out = "";
+								var i;
+								for(i = 0; i < myArr.length; i++) {
+									out+='<br><tr><td>'+myArr[i].idPeticion+'</td> <td>'+myArr[i].direccionIP+'</td> <td>'+myArr[i].usuario+'</td><td>'+myArr[i].texto+'</td><td>'+myArr[i].abierta+'</td><td>'+myArr[i].fechaInicio+'</td><td>'+myArr[i].fechaFin+'</td></tr>';
+								}
+								document.getElementById("tabla").innerHTML = out;
+							}
+						};
+						xmlhttp.open("POST", url, true);
+						xmlhttp.send();
+					}
+				</script>
+
+			</tbody>
+		</table>
+
+			<script type="text/javascript"> 
+
+			
+
+
+
+
+
+			function poll() {
+
+				var xmlhttp = new XMLHttpRequest();
+				var url = "vertablajson.php";
+
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						document.getElementById("id01").innerHTML = this.responseText;
+					}
+				};
+
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+			}
+
+
+
+
+
+
+
+		</script>
+	</div>
+	</div>
+
+
+
+
+</body>
+</html>

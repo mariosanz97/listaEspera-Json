@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mi primer script en PHP</title>
+	<meta charset="utf-8">  
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #BCF9FB"   onload="tablaPreguntas()">
+<div align="center">
+<div style="max-width: 500px">
+			<div style="float: left; ">
+				<br>
+
+				Usuario<br>
+				<input type="text" id="usuario"><br><br>
+				Pregunta:<br><br>
+				<textarea id="pregunta" rows="5" cols="40"></textarea>
+				<br><br>  
+
+				<button onclick='Insertar(this)' id="Insertar"> Insertar duda</button><br> 
+
+			</div>
+<br><br><br><br><br> <br>
+			<div style="float: right;  ">
+				
+				ID<br>
+				<input type="text" id="id"><br><br>
+				<button onclick='Eliminar(this)' id="id"> Borrar duda</button><br> 
+			</div>
+			</div>
+
+</div> 
+		<!--
+		idpeticion<br>
+		<input type="text" id="idpeticion" ><br><br>
+		<button onclick='Eliminar(this)' id="Eliminar"> Marcar como resuelta</button><br>
+	-->
+
+	<p id="result"> </p>
+	<div id="id01"></div>
+	
+
+	<script>	
+		// recarga funcion cada 5 segundos
+		/*
+			setInterval('poll()',3000);
+			var xmlhttp = new XMLHttpRequest();
+			var url = "vertablajson.php"; 
+
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("id01").innerHTML = this.responseText;
+				}
+			};
+
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+			*/
+			
+		</script> 
+<div align="center">
+		<div style=" border: solid; border-color: #BCF9FB; max-width: 600px; ">
+			<table class="table" align="center" style="margin-top: 230px">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>DireccionIP</th>
+						<th> Usuario</th>
+						<th> Texto</th>
+						<th> Abierta</th>
+						<th> FechaInicio</th>
+					</tr>
+				</thead>
+
+				<tbody id="tabla">
+
+
+
+					<script type="text/javascript">
+						setInterval('tablaPreguntas()', 5000);
+
+
+						function tablaPreguntas(){
+							var xmlhttp = new XMLHttpRequest();
+							var url = "vertablajson.php";
+							xmlhttp.onreadystatechange = function() {
+								if (this.readyState == 4 && this.status == 200) {
+									var myArr = JSON.parse(this.responseText);
+									var out = "";
+									var i;
+									for(i = 0; i < myArr.length; i++) {
+										out+='<tr> <td>'+myArr[i].idPeticion+'</td> <td>'+myArr[i].direccionIP+'</td> <td>'+myArr[i].usuario+'</td><td>'+myArr[i].texto+'</td><td>'+myArr[i].abierta+'</td><td>'+myArr[i].fechaInicio+'</td><td>';
+									}
+									document.getElementById("tabla").innerHTML = out;
+								}
+							};
+							xmlhttp.open("POST", url, true);
+							xmlhttp.send();
+						}
+					</script>
+
+				</tbody>
+			</table>
+		</div>
+		</div>
+		<br><br><br>
+
+
+
+
+
+
+		<script type="text/javascript"> 
+
+
+			function Insertar(varclik) {
+
+				var usuario = document.getElementById("usuario").value ;
+				var pregunta = document.getElementById("pregunta").value;
+
+/*
+			var http = new XMLHttpRequest();
+			var url = "anadir.php";
+			var params = "usuario="+usuario+"&pregunta="+pregunta;
+			http.open("POST", url, true);
+
+			//Send the proper header information along with the request
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+			http.onreadystatechange = function() {//Call a function when the state changes.
+				if(http.readyState == 4 && http.status == 200) {
+					poll();
+				}
+			}
+			http.send(params);
+			document.getElementById("usuario").value="";
+			document.getElementById("pregunta").value="";
+
+			/**/
+
+
+			var json_upload = "datos=" + JSON.stringify({usuario:usuario, pregunta:pregunta});
+			var url = "anadir.php";
+				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+				xmlhttp.open("POST", url);
+				
+
+				xmlhttp.onreadystatechange = function() {
+					if(this.readyState == 4 && this.status == 200) {
+						//alert(this.responseText); 
+						document.getElementById("result").innerHTML=this.responseText;
+					}
+
+					
+
+				};
+				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xmlhttp.send(json_upload);
+
+				document.getElementById("usuario").value="";
+				document.getElementById("pregunta").value="";
+
+			}
+
+
+
+
+			function Eliminar(varclik) {
+
+				var id = document.getElementById("id").value;
+
+
+				var json_upload = "datos=" + JSON.stringify({id:id});
+			var url = "borrar.php";
+				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+				xmlhttp.open("POST", url);
+				
+
+				xmlhttp.onreadystatechange = function() {
+					if(this.readyState == 4 && this.status == 200) {
+						//alert(this.responseText); 
+						document.getElementById("result").innerHTML=this.responseText;
+					}
+
+					
+
+				};
+				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xmlhttp.send(json_upload);
+
+				document.getElementById("id").value="";c
+
+
+
+		}
+
+
+	</script>
+</div>
+</div>
+
+
+
+
+</body>
+</html>
